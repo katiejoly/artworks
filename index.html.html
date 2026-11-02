@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Large original paintings by Katie Joly. Eight one-of-a-kind pieces available at a time.">
+  <title>Katie Joly — Original paintings</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Karla:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --linen: #f4ecdf;      /* page */
+      --oat: #ebe1d1;        /* soft panels */
+      --sand: #ddd0bc;       /* image placeholders */
+      --walnut: #3a2f27;     /* text */
+      --taupe: #7d6e5f;      /* secondary text */
+      --moss: #5f5a40;       /* links and accents */
+      --line: #d9ccb8;
+      --serif: "Cormorant Garamond", Georgia, serif;
+      --sans: "Karla", Arial, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--linen);
+      color: var(--walnut);
+      font: 400 16px/1.7 var(--sans);
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+    a:focus-visible { outline: 2px solid var(--moss); outline-offset: 4px; }
+
+    header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      padding: 34px 4vw;
+    }
+    .name { font: 500 28px var(--serif); letter-spacing: .01em; }
+    nav { display: flex; gap: 30px; font-size: 15px; }
+    nav a { color: var(--taupe); transition: color .2s; }
+    nav a:hover { color: var(--walnut); }
+
+    .hero {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 40px;
+      padding: 70px 4vw 56px;
+    }
+    .hero-art {
+      height: min(88vh, 920px);
+      min-height: 420px;
+      margin: 0 4vw;
+      background: var(--sand);
+      box-shadow: 0 30px 50px -30px rgba(58, 47, 39, .45);
+      overflow: hidden;
+    }
+    .hero-art img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    h1 {
+      max-width: 760px;
+      margin: 0;
+      font: 400 clamp(44px, 7vw, 88px)/1.04 var(--serif);
+      letter-spacing: -.015em;
+    }
+    .hero p {
+      max-width: 280px;
+      margin: 0 0 10px;
+      color: var(--taupe);
+    }
+    .text-link {
+      display: inline-block;
+      margin-top: 26px;
+      padding-bottom: 4px;
+      border-bottom: 1px solid var(--moss);
+      color: var(--moss);
+      font-weight: 500;
+    }
+
+    .works { padding: 140px 4vw 40px; }
+    .works-head { margin-bottom: 90px; }
+    .works-head h2 { margin: 0; font: 400 clamp(32px, 4vw, 46px) var(--serif); }
+    .works-head p { margin: 6px 0 0; color: var(--taupe); }
+
+    .piece {
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      column-gap: 2vw;
+      align-items: end;
+      margin-bottom: clamp(100px, 14vw, 220px);
+    }
+    .piece .frame { grid-column: 1 / span 7; grid-row: 1; }
+    .piece .caption { grid-column: 9 / span 4; grid-row: 1; padding: 0 0 4px; }
+    .piece:nth-child(even) .frame { grid-column: 6 / span 7; }
+    .piece:nth-child(even) .caption { grid-column: 1 / span 4; text-align: right; }
+    .frame {
+      position: relative;
+      aspect-ratio: var(--ratio, 4 / 5);
+      background: var(--sand);
+      box-shadow: 0 22px 40px -24px rgba(58, 47, 39, .45);
+      overflow: hidden;
+    }
+    .frame img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .frame .room { position: absolute; inset: 0; opacity: 0; transition: opacity .6s ease; }
+    .piece:hover .room { opacity: 1; }
+    .placeholder {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--taupe);
+      font: italic 400 20px var(--serif);
+      background: linear-gradient(150deg, #e3d6c2, #efe5d5 55%, #d8cab4);
+    }
+    .caption h3 { margin: 0; font: 500 clamp(28px, 2.6vw, 38px)/1.15 var(--serif); }
+    .specs { margin: 4px 0 0; color: var(--taupe); font-size: 14px; }
+    .price { margin: 12px 0 0; font-weight: 500; }
+    .text-link-inline { color: var(--moss); border-bottom: 1px solid var(--moss); }
+    .piece.sold .frame { opacity: .72; }
+    .piece.sold .price { color: var(--taupe); font-style: italic; font-family: var(--serif); font-size: 19px; font-weight: 400; }
+
+    .about { background: var(--oat); }
+    .about-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 110px 6vw;
+      display: grid;
+      grid-template-columns: 5fr 6fr;
+      gap: clamp(40px, 8vw, 110px);
+      align-items: center;
+    }
+    .about .frame { --ratio: 4 / 5; box-shadow: none; }
+    .about h2 { margin: 0 0 22px; font: 400 clamp(32px, 4vw, 46px)/1.1 var(--serif); }
+    .about p { max-width: 440px; margin: 0 0 16px; color: #5b4e43; }
+
+    .contact { padding: 120px 6vw 130px; text-align: center; }
+    .contact h2 { margin: 0 auto; max-width: 640px; font: 400 clamp(34px, 5vw, 58px)/1.08 var(--serif); }
+    .contact p { max-width: 420px; margin: 20px auto 0; color: var(--taupe); }
+    .button {
+      display: inline-block;
+      margin-top: 32px;
+      padding: 15px 34px;
+      background: var(--walnut);
+      color: var(--linen);
+      font-weight: 500;
+      transition: background .2s;
+    }
+    .button:hover { background: var(--moss); }
+
+    footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 26px 6vw;
+      border-top: 1px solid var(--line);
+      color: var(--taupe);
+      font-size: 14px;
+    }
+
+    @media (max-width: 760px) {
+      header { padding: 26px 6vw; }
+      nav { gap: 20px; }
+      .hero { padding: 56px 6vw 76px; }
+      .hero { flex-direction: column; align-items: flex-start; gap: 18px; padding: 44px 6vw 36px; }
+      .hero p { max-width: 420px; }
+      .hero-art { margin: 0 4vw; min-height: 320px; height: 100vw; }
+      .works { padding: 90px 6vw 20px; }
+      .piece { display: block; margin-bottom: 90px; }
+      .piece .caption, .piece:nth-child(even) .caption { padding-top: 20px; text-align: left; }
+      .about-inner { grid-template-columns: 1fr; padding: 80px 6vw; }
+      .contact { padding: 90px 6vw; }
+      footer { flex-direction: column; align-items: center; text-align: center; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      * { transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a class="name" href="#">Katie Joly</a>
+    <nav aria-label="Main navigation">
+      <a href="#available">Available work</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1>Original paintings.</h1>
+      <p>Eight works available at a time. Each is one of a kind.</p>
+    </section>
+
+    <!-- Hero: use your strongest painting, or a photo of one hanging in a room. -->
+    <div class="hero-art"><div class="placeholder">Featured painting</div></div>
+
+    <section class="works" id="available">
+      <div class="works-head">
+        <h2>Available work</h2>
+        <p>To inquire about a painting, <a class="text-link-inline" href="mailto:kitjoly@gmail.com?subject=Painting%20inquiry">send me an email</a>.</p>
+      </div>
+
+      <div class="pieces">
+        <!--
+          HOW TO EDIT A PIECE
+          1. Save the photo in an "images" folder, e.g. images/work-1.jpg
+          2. Replace the <div class="placeholder"> line with:
+             <img src="images/work-1.jpg" alt="Title, original painting by Katie Joly">
+          3. Change --ratio to the painting's shape (width / height), e.g. 3 / 4 or 1 / 1 or 4 / 3
+          4. Update the title, size, medium and price.
+          5. When a piece sells, add the word "sold" to the class: class="piece sold"
+             and change the price line to: <p class="price">Found a home</p>.
+          OPTIONAL ROOM PHOTO: add a second image right after the first one inside the frame:
+             <img class="room" src="images/work-1-room.jpg" alt="Title hanging in a room">
+          It fades in when someone hovers over the painting.
+          To swap in a new piece, just replace the whole <article> block.
+        -->
+
+        <article class="piece">
+          <div class="frame" style="--ratio: 4 / 5"><div class="placeholder">Photo of painting</div></div>
+          <div class="caption">
+            <h3>Title of painting</h3>
+            <p class="specs">36 × 48 in, acrylic on canvas</p>
+            <p class="price">$0,000</p>
+          </div>
+        </article>
+
+        <article class="piece">
+          <div class="frame" style="--ratio: 1 / 1"><div class="placeholder">Photo of painting</div></div>
+          <div class="caption">
+            <h3>Title of painting</h3>
+            <p class="specs">40 × 40 in, acrylic on canvas</p>
+            <p class="price">$0,000</p>
+          </div>
+        </article>
+
+        <article class="piece">
+          <div class="frame" style="--ratio: 3 / 4"><div class="placeholder">Photo of painting</div></div>
+          <div class="caption">
+            <h3>Title of painting</h3>
+            <p class="specs">30 × 40 in, acrylic on canvas</p>
+            <p class="price">$0,000</p>
+          </div>
+        </article>
+
+        <article class="piece">
+          <div class="frame" style="--ratio: 4 / 3"><div class="placeholder">Photo of painting</div></div>
+          <div class="caption">
+            <h3>Title of painting</h3>
+            <p class="specs">48 × 36 in, acrylic on canvas</p>
+            <p class="price">$0,000</p>
+          </div>
+        </article>
+
+        <article class="piece">
+          <div class="frame" style="--ratio: 4 / 5"><div class="placeholder">Photo of painting</div></div>
+          <div class="caption">
+            <h3>Title of painting</h3>
+            <p class="specs">36 × 48 in, acrylic on canvas</p>
+            <p class="price">$0,000</p>
+          </div>
+        </article>
+
+        <article class="piece">
+          <div class="frame" style="--ratio: 1 / 1"><div class="placeholder">Photo of painting</div></div>
+          <div class="caption">
+            <h3>Title of painting</h3>
+            <p class="specs">40 × 40 in, acrylic on canvas</p>
+            <p class="price">$0,000</p>
+          </div>
+        </article>
+
+        <article class="piece">
+          <div class="frame" style="--ratio: 3 / 4"><div class="placeholder">Photo of painting</div></div>
+          <div class="caption">
+            <h3>Title of painting</h3>
+            <p class="specs">30 × 40 in, acrylic on canvas</p>
+            <p class="price">$0,000</p>
+          </div>
+        </article>
+
+        <article class="piece">
+          <div class="frame" style="--ratio: 4 / 3"><div class="placeholder">Photo of painting</div></div>
+          <div class="caption">
+            <h3>Title of painting</h3>
+            <p class="specs">48 × 36 in, acrylic on canvas</p>
+            <p class="price">$0,000</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="about" id="about">
+      <div class="about-inner">
+        <!-- Replace with a photo of you in your studio, or a close-up of your brushwork. -->
+        <div class="frame"><div class="placeholder">Studio photo</div></div>
+        <div>
+          <h2>About Katie</h2>
+          <!-- Replace these two paragraphs with your own words. -->
+          <p>Write a few warm sentences here about what you paint, what inspires it, and where you make it.</p>
+          <p>Add a line about how buying works: how paintings are packed and shipped, and whether you offer local pickup or help with hanging.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact" id="contact">
+      <h2>Interested in a painting?</h2>
+      <p>Email me the title of the painting and I’ll reply within a couple of days.</p>
+      <a class="button" href="mailto:kitjoly@gmail.com?subject=Painting%20inquiry">Email Katie</a>
+    </section>
+  </main>
+
+  <footer>
+    <span>© 2026 Katie Joly</span>
+    <span>Original paintings, one of a kind</span>
+  </footer>
+</body>
+</html>
